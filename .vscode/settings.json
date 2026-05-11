@@ -1,0 +1,30 @@
+{
+  "sqltools.connections": [
+    {
+      "ssh": "Disabled",
+      "previewLimit": 50,
+      "server": "localhost",
+      "port": 5433,
+      "driver": "PostgreSQL",
+      "name": "localhost",
+      "database": "mychatdb",
+      "username": "postgres",
+      "password": "123456"
+    },
+    {
+      "mysqlOptions": {
+        "authProtocol": "default",
+        "enableSsl": "Disabled"
+      },
+      "ssh": "Disabled",
+      "previewLimit": 50,
+      "server": "localhost",
+      "port": 3306,
+      "driver": "MySQL",
+      "database": "project_app",
+      "username": "root",
+      "name": "localhost",
+      "password": "123456"
+    }
+  ]
+}

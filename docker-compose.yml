@@ -1,0 +1,41 @@
+services:
+  db:
+    image: postgres:16-alpine
+    environment:
+      POSTGRES_DB: chatdb
+      POSTGRES_USER: chatuser
+      POSTGRES_PASSWORD: chatpass
+    ports:
+      - "5432:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+
+  server:
+    build:
+      context: ./server
+    environment:
+      NODE_ENV: production
+      PORT: 3001
+      DATABASE_URL: postgresql://chatuser:chatpass@db:5432/chatdb
+      JWT_SECRET: change_me_in_prod
+      CLIENT_ORIGIN: http://localhost:5173,http://localhost
+    ports:
+      - "3001:3001"
+    depends_on:
+      - db
+    volumes:
+      - ./server/uploads:/app/uploads
+
+  client:
+    build:
+      context: ./client
+      args:
+        VITE_API_URL: http://localhost:3001/api/v1
+        VITE_SOCKET_URL: http://localhost:3001
+    ports:
+      - "5173:80"
+    depends_on:
+      - server
+
+volumes:
+  pgdata:
